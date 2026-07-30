@@ -42,3 +42,26 @@ module "security_group" {
   ]
 
 }
+module "ec2" {
+
+  source = "../../modules/ec2"
+
+  instance_name = "enterprise-devops-dev"
+
+  ami_id = "ami-xxxxxxxxxxxxxxxxx"
+
+  instance_type = "t3.micro"
+
+  subnet_id = module.vpc.public_subnet_1_id
+
+  security_group_ids = [
+    module.security_group.security_group_id
+  ]
+
+  iam_instance_profile = module.iam.instance_profile_name
+
+  user_data = null
+
+}
+
+
