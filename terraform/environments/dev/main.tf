@@ -63,5 +63,23 @@ module "ec2" {
   user_data = null
 
 }
+module "alb" {
+
+  source = "../../modules/alb"
+
+  name = "enterprise-devops-alb"
+
+  vpc_id = module.vpc.vpc_id
+
+  public_subnet_ids = [
+    module.vpc.public_subnet_1_id,
+    module.vpc.public_subnet_2_id
+  ]
+
+  security_group_ids = [
+    module.security_group.security_group_id
+  ]
+
+}
 
 
