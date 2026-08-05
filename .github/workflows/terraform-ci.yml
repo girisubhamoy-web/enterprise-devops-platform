@@ -1,31 +1,26 @@
 name: Terraform CI
 
 on:
-
   push:
-
     branches:
-      - feature/terraform-foundation
+      - main
+      - feature/**
 
   pull_request:
-
     branches:
       - main
 
 jobs:
-
   terraform:
+    name: Terraform Validation Pipeline
 
     runs-on: ubuntu-latest
 
     defaults:
-
       run:
-
         working-directory: terraform/environments/dev
 
     steps:
-
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -33,6 +28,9 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.15.8
+
+      - name: Show Terraform Version
+        run: terraform version
 
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
